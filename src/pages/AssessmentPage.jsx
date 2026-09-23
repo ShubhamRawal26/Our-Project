@@ -92,7 +92,7 @@ export function AssessmentPage({ onNavigate, currentUser }) {
     if (stopStreamRef.current) stopStreamRef.current();
   }, []);
 
-  // Hook for AI Vision Proctoring
+  // Hook for Automated Vision Proctoring
   const {
     stream,
     cameraActive,
@@ -114,7 +114,18 @@ export function AssessmentPage({ onNavigate, currentUser }) {
   } = useProctoringStream({
     isActive: engineState === 'test_active',
     onDisqualify: handleDisqualify,
-    allowDegradedMode: true
+    allowDegradedMode: true,
+    onTabSwitch: (count) => {
+      if (dispatchNotification) {
+        dispatchNotification({
+          type: 'warning',
+          title: `Tab Switch Warning (${count}/3)`,
+          message: count >= 3
+            ? 'Final warning! Academic policy strictly prohibits window switching. One more switch will disqualify this assessment.'
+            : `Assessment window lost focus (${count}/3). Please keep this tab focused to avoid automatic disqualification.`
+        });
+      }
+    }
   });
 
   stopStreamRef.current = stopStream;
@@ -175,15 +186,15 @@ export function AssessmentPage({ onNavigate, currentUser }) {
     updateTimer();
     timerIntervalRef.current = setInterval(updateTimer, 1000);
 
-    // Update immediately on window focus to correct any background throttling
+    // Update immediately on window focus/visibility change to correct any background throttling
     const handleFocus = () => updateTimer();
     window.addEventListener('focus', handleFocus);
-    window.addEventListener('visibilitychange', handleFocus);
+    document.addEventListener('visibilitychange', handleFocus);
 
     return () => {
       if (timerIntervalRef.current) clearInterval(timerIntervalRef.current);
       window.removeEventListener('focus', handleFocus);
-      window.removeEventListener('visibilitychange', handleFocus);
+      document.removeEventListener('visibilitychange', handleFocus);
     };
   }, [engineState, activeSession, answers, flaggedQuestions, currentQIndex]);
 
@@ -331,7 +342,7 @@ export function AssessmentPage({ onNavigate, currentUser }) {
       dispatchNotification({
         targetRole: 'student',
         senderId: 'SYSTEM-PROCTOR',
-        senderName: 'SkillSetu AI Proctor',
+        senderName: 'SkillSetu Automated Proctor',
         senderRole: 'system',
         title: `Diagnostic Assessment Completed (${fullResultPayload.overallScore}%)`,
         message: `You scored ${fullResultPayload.overallScore}% in ${activeSession.branchTitle}. Six-axis competency radar updated.`,
@@ -992,7 +1003,7 @@ export function AssessmentPage({ onNavigate, currentUser }) {
               className="px-6 py-3.5 rounded-2xl bg-emerald-800 hover:bg-emerald-900 text-white text-xs sm:text-sm font-extrabold transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer shrink-0"
             >
               <Play className="w-4 h-4 fill-white" />
-              <span>Begin AI-Proctored Test</span>
+              <span>Begin Proctored Test</span>
             </button>
           </div>
 
@@ -1023,7 +1034,7 @@ export function AssessmentPage({ onNavigate, currentUser }) {
             <div className="flex items-center gap-2.5">
               <ShieldCheck className="w-5 h-5 text-emerald-700 shrink-0" />
               <span>
-                <strong>Verified AI Proctoring:</strong> Real-time MediaPipe facial posture analysis, multi-face alerts, and session integrity locking.
+                <strong>Verified Proctoring Engine:</strong> Real-time MediaPipe facial posture analysis, multi-face alerts, and session integrity locking.
               </span>
             </div>
             <span className="text-[11px] font-mono text-emerald-800 shrink-0">

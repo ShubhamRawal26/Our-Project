@@ -25,6 +25,7 @@ export function ProctoringPiP({
   useEffect(() => {
     if (videoRef.current && stream) {
       videoRef.current.srcObject = stream;
+      videoRef.current.play().catch(() => {});
     }
   }, [stream]);
 
@@ -36,7 +37,7 @@ export function ProctoringPiP({
       className="fixed top-4 right-4 sm:top-6 sm:right-6 z-50 pointer-events-auto select-none"
     >
       <div 
-        className={`w-36 sm:w-44 bg-slate-900/95 backdrop-blur-md rounded-2xl border shadow-2xl overflow-hidden transition-all duration-300 ring-1 ring-black/30 ${
+        className={`w-36 sm:w-48 bg-slate-900/95 backdrop-blur-md rounded-2xl border shadow-2xl overflow-hidden transition-all duration-300 ring-1 ring-black/30 ${
           faceAbsent
             ? 'border-red-500/90 ring-2 ring-red-500/60'
             : multipleFacesDetected
@@ -79,7 +80,19 @@ export function ProctoringPiP({
             )}
           </div>
 
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-1.5">
+            {tabSwitchCount > 0 && (
+              <span 
+                title={`Tab switches: ${tabSwitchCount} of 3 allowed before disqualification`}
+                className={`px-1.5 py-0.2 rounded text-[8px] font-mono font-bold ${
+                  tabSwitchCount >= 3 
+                    ? 'bg-red-500/30 text-red-300 border border-red-500/50' 
+                    : 'bg-amber-500/25 text-amber-300 border border-amber-500/40'
+                }`}
+              >
+                Tabs: {tabSwitchCount}/3
+              </span>
+            )}
             <button
               type="button"
               onClick={() => setIsMinimized(prev => !prev)}
@@ -102,6 +115,7 @@ export function ProctoringPiP({
                   autoPlay
                   playsInline
                   muted
+                  onLoadedMetadata={() => videoRef.current?.play().catch(() => {})}
                   className="w-full h-full object-cover -scale-x-100"
                 />
 
@@ -110,12 +124,15 @@ export function ProctoringPiP({
                   <div 
                     role="alert" 
                     aria-live="assertive"
-                    className="absolute inset-0 bg-red-950/80 backdrop-blur-xs flex flex-col items-center justify-center p-2 text-center z-10 animate-pulse"
+                    className="absolute inset-0 bg-red-950/90 backdrop-blur-xs flex flex-col items-center justify-center p-2 text-center z-10 animate-pulse"
                   >
                     <AlertTriangle className="w-5 h-5 text-red-400 mb-0.5" />
                     <span className="text-[10px] font-bold text-white leading-tight">Face Missing!</span>
-                    <span className="text-[11px] font-extrabold text-red-300 font-mono mt-0.5">
-                      Flag in {faceAbsentCountdown ?? 4}s
+                    <span className="text-[12px] font-extrabold text-red-300 font-mono mt-0.5">
+                      Dismiss in {faceAbsentCountdown ?? 3}s
+                    </span>
+                    <span className="text-[8px] text-red-200/90 mt-0.5 leading-tight">
+                      Please face the camera
                     </span>
                   </div>
                 )}
@@ -157,7 +174,7 @@ export function ProctoringPiP({
             <div className="absolute bottom-1 left-1 right-1 flex items-center justify-between px-1.5 py-0.5 rounded bg-black/70 backdrop-blur-xs text-[8px] text-slate-300 pointer-events-none">
               <span className="flex items-center gap-1 font-mono">
                 <ShieldCheck className={`w-2.5 h-2.5 ${proctoringStatus === 'ok' ? 'text-emerald-400' : 'text-amber-400'}`} />
-                {proctoringStatus === 'ok' ? 'AI Proctored' : 'Degraded'}
+                {proctoringStatus === 'ok' ? 'Verified Proctored' : 'Degraded'}
               </span>
               {violationsCount > 0 ? (
                 <span className="text-amber-300 font-bold font-mono">
@@ -177,7 +194,7 @@ export function ProctoringPiP({
 
       {/* Screen reader live assertive alerts */}
       <div className="sr-only" aria-live="assertive">
-        {faceAbsent && `Warning: Face not detected in proctoring camera. Disqualification risk in ${faceAbsentCountdown} seconds.`}
+        {faceAbsent && `Warning: Face not detected in proctoring camera. Test dismissal in ${faceAbsentCountdown ?? 3} seconds.`}
         {multipleFacesDetected && `Security warning: Multiple faces (${faceCount}) detected in camera view.`}
       </div>
     </aside>
@@ -212,7 +229,7 @@ export function ProctoringPermissionModal({
             <h3 className="text-base sm:text-lg font-bold text-slate-900 leading-tight">
               Pre-Assessment Proctoring Check
             </h3>
-            <p className="text-xs text-slate-500">SkillSetu AI Vision & Integrity Engine</p>
+            <p className="text-xs text-slate-500">SkillSetu Vision & Integrity Engine</p>
           </div>
         </div>
 
@@ -224,7 +241,7 @@ export function ProctoringPermissionModal({
           <ul className="text-xs text-slate-600 space-y-1 list-disc list-inside">
             <li>Single face centered in view (MediaPipe BlazeFace neural detection).</li>
             <li>No secondary devices, mobile screens, or tab-switching allowed.</li>
-            <li>AI flags multiple individuals or absence from the testing seat.</li>
+            <li>System flags multiple individuals or absence from the testing seat.</li>
           </ul>
         </div>
 

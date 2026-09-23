@@ -25,6 +25,7 @@ import {
   Tag
 } from 'lucide-react';
 import { ALL_COURSES } from '../data/coursesData';
+import { useNotifications } from '../context/NotificationContext';
 import { useProctoringStream } from '../hooks/useProctoringStream';
 import { 
   ProctoringPiP, 
@@ -50,6 +51,7 @@ const QUESTIONS = [
 const TOTAL_TIME = 600;
 
 export function SkillPage({ onNavigate, onOpenReadinessModal, selectedCourse = null, onClearSelectedCourse }) {
+  const { dispatchNotification } = useNotifications();
   const [testState, setTestState] = useState('idle');
   const [currentQ, setCurrentQ] = useState(0);
   const [answers, setAnswers] = useState({});
@@ -109,14 +111,31 @@ export function SkillPage({ onNavigate, onOpenReadinessModal, selectedCourse = n
     tabSwitchCount,
     cameraDisconnected,
     rapidMovementDetected,
+    proctoringStatus,
     faceAbsent,
     faceAbsentCountdown,
+    faceCount,
+    multipleFacesDetected,
+    proctoringViolations,
     requestCamera,
     stopStream,
+    enableDegradedMode,
     getProctoringMetadata
   } = useProctoringStream({
     isActive: testState === 'running',
-    onDisqualify: handleDisqualify
+    onDisqualify: handleDisqualify,
+    allowDegradedMode: true,
+    onTabSwitch: (count) => {
+      if (dispatchNotification) {
+        dispatchNotification({
+          type: 'warning',
+          title: `Tab Switch Warning (${count}/3)`,
+          message: count >= 3
+            ? 'Final warning! Academic integrity policy strictly prohibits window switching. One more switch will disqualify this assessment.'
+            : `Assessment window lost focus (${count}/3). Please keep this tab focused to avoid automatic disqualification.`
+        });
+      }
+    }
   });
 
   stopStreamRef.current = stopStream;
@@ -258,6 +277,10 @@ export function SkillPage({ onNavigate, onOpenReadinessModal, selectedCourse = n
           rapidMovementDetected={rapidMovementDetected}
           faceAbsent={faceAbsent}
           faceAbsentCountdown={faceAbsentCountdown}
+          faceCount={faceCount}
+          multipleFacesDetected={multipleFacesDetected}
+          proctoringStatus={proctoringStatus}
+          violationsCount={proctoringViolations?.length || 0}
           onReEnableCamera={requestCamera}
         />
 

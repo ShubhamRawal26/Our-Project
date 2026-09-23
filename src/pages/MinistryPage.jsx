@@ -134,7 +134,7 @@ export function MinistryPage({ onNavigate, currentUser }) {
                 <Globe2 className="w-4 h-4 text-emerald-700" />
                 <span>State Talent Deficit Heatmap</span>
               </h3>
-              <span className="text-[10px] font-bold uppercase bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded">Live AI Engine</span>
+              <span className="text-[10px] font-bold uppercase bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded">Live Analytics Engine</span>
             </div>
             <p className="text-xs text-slate-600 font-medium">
               Select an Indian state to audit live regional skill bottlenecks and compliance.

@@ -9,14 +9,14 @@ export const ASSESSMENT_BRANCHES = {
     id: 'cs_healthcare_informatics',
     title: 'Computer Science & Healthcare Informatics',
     shortTitle: 'CS & Health Informatics',
-    tagline: 'EHR systems, FHIR APIs, healthcare AI models, and secure clinical databases.',
+    tagline: 'EHR systems, FHIR APIs, healthcare computational models, and secure clinical databases.',
     badgeColor: 'emerald',
     icon: 'Cpu',
     timeLimit: 600, // 10 minutes in seconds
     competencyAxes: [
       { id: 'ds', name: 'Data Structures', fullName: 'Data Structures & Algorithms', desc: 'Triage prioritization, graph networks, and heap algorithms.' },
       { id: 'cloud', name: 'Cloud & DevOps', fullName: 'Healthcare Cloud & Microservices', desc: 'HIPAA-compliant AWS/GCP pipelines, containers, and orchestration.' },
-      { id: 'ai', name: 'Python & Health AI', fullName: 'Python, PyTorch & Clinical ML', desc: 'Predictive diagnostics, biomedical NLP, and neural classification.' },
+      { id: 'data', name: 'Python & Health Data', fullName: 'Python, PyTorch & Clinical ML', desc: 'Predictive diagnostics, biomedical NLP, and neural classification.' },
       { id: 'apis', name: 'Healthcare APIs', fullName: 'HL7, FHIR & ABHA Ecosystem', desc: 'Interoperability schemas, consent managers, and NDHM gateways.' },
       { id: 'db', name: 'Databases & SQL', fullName: 'Clinical Databases & Data Warehousing', desc: 'Relational EHR schemas, vector stores, and ACID medical transactions.' },
       { id: 'sec', name: 'Cybersecurity', fullName: 'Cybersecurity & HIPAA Compliance', desc: 'Zero-trust architecture, TLS 1.3, PHI encryption, and audit logs.' }
@@ -115,20 +115,20 @@ export const BRANCH_QUESTION_BANKS = {
       correct: 0,
       explanation: 'Kubernetes RollingUpdate paired with HTTP readiness probes prevents incoming telemetry traffic from reaching unready pods.'
     },
-    // Axis 2: Python & Health AI
+    // Axis 2: Python & Health Data
     {
-      id: 'cs-ai-1',
+      id: 'cs-data-1',
       axisIndex: 2,
-      axisName: 'Python & Health AI',
+      axisName: 'Python & Health Data',
       question: 'When fine-tuning a clinical BERT model on radiology EHR discharge summaries, which metric best accounts for severe class imbalance in rare diagnoses?',
       options: ['Macro-averaged F1-Score & PR-AUC', 'Raw Accuracy', 'Mean Squared Error', 'Adjusted R-squared'],
       correct: 0,
       explanation: 'Accuracy is misleading for rare conditions (e.g. 99% negative cases); Precision-Recall AUC and Macro F1 penalize false negatives effectively.'
     },
     {
-      id: 'cs-ai-2',
+      id: 'cs-data-2',
       axisIndex: 2,
-      axisName: 'Python & Health AI',
+      axisName: 'Python & Health Data',
       question: 'In PyTorch, which layer prevents internal covariate shift and stabilizes training when training deep convolutional networks on chest X-rays?',
       options: ['BatchNorm2d / LayerNorm', 'Dropout(p=0.9)', 'Linear without bias', 'Flatten'],
       correct: 0,
@@ -374,7 +374,7 @@ export const BRANCH_QUESTION_BANKS = {
       axisIndex: 3,
       axisName: 'Bio-CAD & 3D',
       question: 'Which medical image file format is standardly segmented in Bio-CAD software to generate patient-specific 3D cranial or pelvic meshes?',
-      options: ['DICOM (Digital Imaging and Communications in Medicine)', 'JPEG 2000 lossy', 'Adobe Illustrator AI', 'MPEG-4 video'],
+      options: ['DICOM (Digital Imaging and Communications in Medicine)', 'JPEG 2000 lossy', 'Adobe Illustrator Vector (.eps)', 'MPEG-4 video'],
       correct: 0,
       explanation: 'DICOM contains volumetric CT/MRI voxels calibrated in Hounsfield Units, which bio-engineers threshold to extract bone surfaces into STL files.'
     },

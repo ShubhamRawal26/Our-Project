@@ -86,7 +86,7 @@ export const INITIAL_FEED_POSTS = [
       institution: 'Sarita Vihar, New Delhi',
       location: 'Sarita Vihar, Mathura Road, New Delhi 110076',
       avatarImage: meenakshiAvatar,
-      avatar: 'AI',
+      avatar: 'AIIA',
       avatarBg: 'bg-emerald-800',
       verified: true,
       aisheCode: 'AISHE-U-0102',

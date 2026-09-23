@@ -461,7 +461,7 @@ export const AVAILABLE_OPPORTUNITIES = [
     title: 'Clinical Resident: Inpatient Panchakarma & Metabolic Disorders Unit',
     company: 'All India Institute of Ayurveda (AIIA)',
     brandName: 'All India Institute of Ayurveda',
-    logo: 'AI',
+    logo: 'AIIA',
     logoBg: 'bg-emerald-800',
     location: 'Sarita Vihar, New Delhi',
     package: '₹30,000 / month + Housing',
