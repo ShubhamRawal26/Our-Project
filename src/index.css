@@ -401,3 +401,47 @@ a {
 .perspective-1000 {
   perspective: 1000px;
 }
+
+/* Official Bhashini Indic Multilingual Translation Styling */
+body {
+  top: 0px !important;
+  position: static !important;
+  margin-top: 0px !important;
+}
+
+/* Hide translation engine banners, iframes, and tooltips - Bhashini UI handles user interaction */
+body > .skiptranslate,
+iframe.goog-te-banner-frame,
+.goog-te-banner-frame,
+#goog-gt-tt,
+.goog-te-balloon-frame,
+.goog-tooltip,
+.goog-tooltip:hover,
+.goog-text-highlight,
+.VIpgJd-ZVi9od-aZ2wEe-wOHMyf,
+.VIpgJd-ZVi9od-aZ2wEe-wOHMyf-hSRGPd,
+.VIpgJd-yAWNEb-L7lbkb {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  height: 0 !important;
+  max-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  pointer-events: none !important;
+  box-shadow: none !important;
+  background-color: transparent !important;
+}
+
+#google_translate_element {
+  display: none !important;
+  position: absolute !important;
+  top: -9999px !important;
+  left: -9999px !important;
+}
+
+.bhashini-skip-translation,
+.notranslate {
+  font-feature-settings: "liga" 1;
+}
+

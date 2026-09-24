@@ -316,10 +316,10 @@ export const TPOPlacementCommandCenter = ({ user = {}, isTPOAdmin = true }) => {
             <span className="px-2.5 py-0.5 rounded-md bg-emerald-100/70 text-emerald-900 border border-emerald-200 font-bold text-[10px]">
               AY 2025–26 Placement Season
             </span>
-            <span className="text-slate-400">·</span>
+            <span className="hidden sm:inline text-slate-400">·</span>
             <span className="flex items-center gap-1 font-semibold text-slate-700">
-              <ShieldCheck className="w-3.5 h-3.5 text-teal-600" />
-              APAAR Verified Eligibility &amp; DigiLocker Synced
+              <ShieldCheck className="w-3.5 h-3.5 text-teal-600 shrink-0" />
+              <span>APAAR Verified Eligibility &amp; DigiLocker Synced</span>
             </span>
           </div>
 

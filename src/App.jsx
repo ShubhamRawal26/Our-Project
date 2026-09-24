@@ -23,6 +23,7 @@ import { AssessmentPage } from './pages/AssessmentPage';
 import { CompanyPage } from './pages/CompanyPage';
 import { NotificationProvider } from './context/NotificationContext';
 import CredentialVerifierModal from './components/CredentialVerifierModal';
+import { BhashiniProvider } from './context/BhashiniContext';
 
 export function App() {
   const [activePage, setActivePage] = useState('home'); // 'home' | 'features' | 'about' | 'opportunities' | 'skill' | 'industry' | 'courses' | 'feed' | 'profile' | 'messages' | 'login' | 'portals' | 'dashboard'
@@ -567,25 +568,28 @@ export function App() {
   };
 
   return (
-    <NotificationProvider activePortalId={activePortalId} currentUser={currentUser}>
-      {renderAppContent()}
+    <BhashiniProvider>
+      <NotificationProvider activePortalId={activePortalId} currentUser={currentUser}>
+        {renderAppContent()}
 
-      {/* Global Readiness Diagnostic Modal */}
-      <ReadinessModal
-        isOpen={isReadinessModalOpen}
-        onClose={() => setIsReadinessModalOpen(false)}
-      />
+        {/* Global Readiness Diagnostic Modal */}
+        <ReadinessModal
+          isOpen={isReadinessModalOpen}
+          onClose={() => setIsReadinessModalOpen(false)}
+        />
 
-      {/* Global Cryptographic Credential Verifier Modal */}
-      <CredentialVerifierModal
-        isOpen={isVerifierModalOpen}
-        onClose={() => {
-          setIsVerifierModalOpen(false);
-          setVerifierInitialQuery('');
-        }}
-        initialQuery={verifierInitialQuery}
-      />
-    </NotificationProvider>
+        {/* Global Cryptographic Credential Verifier Modal */}
+        <CredentialVerifierModal
+          isOpen={isVerifierModalOpen}
+          onClose={() => {
+            setIsVerifierModalOpen(false);
+            setVerifierInitialQuery('');
+          }}
+          initialQuery={verifierInitialQuery}
+        />
+
+      </NotificationProvider>
+    </BhashiniProvider>
   );
 }
 

@@ -18,6 +18,7 @@ import {
 } from 'lucide-react';
 import { PORTALS_DATA, PLATFORM_METADATA } from '../data/portalData';
 import { ComingSoonPage } from '../components/ComingSoonPage';
+import { BhashiniNavbarBadge } from '../components/BhashiniNavbarBadge';
 
 export const PortalSelectPage = ({
   onBackToHome,
@@ -97,6 +98,9 @@ export const PortalSelectPage = ({
           <ArrowLeft className="w-4 h-4 text-emerald-700 group-hover:-translate-x-0.5 transition-transform" />
           <span>Back to Home</span>
         </button>
+
+        {/* Govt of India Bhashini Language Switcher */}
+        <BhashiniNavbarBadge />
       </header>
 
       {/* Main Content Area */}

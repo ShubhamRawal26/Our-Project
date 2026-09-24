@@ -25,6 +25,7 @@ import {
   ExternalLink
 } from 'lucide-react';
 import { useNotifications, formatRelativeTime } from '../context/NotificationContext';
+import { BhashiniNavbarBadge } from './BhashiniNavbarBadge';
 
 export function Navbar({ activePage, setActivePage, onOpenReadinessModal, onOpenVerifierModal, onOpenAuthModal, currentUser, onLogout }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -391,6 +392,9 @@ export function Navbar({ activePage, setActivePage, onOpenReadinessModal, onOpen
 
           {/* Right Action CTAs */}
           <div className="hidden md:flex gap-2.5 items-center">
+            {/* Govt of India Bhashini Multilingual Translation Switcher */}
+            <BhashiniNavbarBadge />
+
             {/* Cross-Stakeholder Notification Bell (Hidden on Landing Page) */}
             {activePage !== 'home' && renderNotificationBell(false)}
 
@@ -492,7 +496,10 @@ export function Navbar({ activePage, setActivePage, onOpenReadinessModal, onOpen
           </div>
 
           {/* Mobile Action Controls */}
-          <div className="md:hidden flex items-center gap-2">
+          <div className="md:hidden flex items-center gap-1.5 sm:gap-2">
+            {/* Govt of India Bhashini Multilingual Translation Switcher (Mobile) */}
+            <BhashiniNavbarBadge compact={true} />
+
             {/* Mobile Notification Bell (Hidden on Landing Page) */}
             {activePage !== 'home' && renderNotificationBell(true)}
 

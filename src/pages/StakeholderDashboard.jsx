@@ -45,6 +45,7 @@ import { CoursesPage } from './CoursesPage';
 import { JobsPage } from './JobsPage';
 import { AssessmentPage } from './AssessmentPage';
 import { ComingSoonView } from '../components/ComingSoonView';
+import { BhashiniNavbarBadge } from '../components/BhashiniNavbarBadge';
 
 export const StakeholderDashboard = ({
   activePortalId,
@@ -509,6 +510,9 @@ export const StakeholderDashboard = ({
           {/* Right Action Icons (Notifications, User PFP Avatar Button) */}
           <div className="flex items-center gap-2 sm:gap-3 shrink-0">
             
+            {/* Govt of India Bhashini Language Switcher */}
+            <BhashiniNavbarBadge />
+
             {/* Notifications Bell */}
             <div className="relative">
               <button
@@ -708,7 +712,7 @@ export const StakeholderDashboard = ({
       </header>
 
       {/* Main Content Area */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-6 pb-28 md:pb-6">
+      <main className="flex-1 max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-6 pb-36 sm:pb-32 md:pb-8">
         {renderActiveView()}
       </main>
 
