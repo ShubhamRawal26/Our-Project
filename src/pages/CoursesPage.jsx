@@ -407,240 +407,9 @@ export function MinistryCoursesOverview() {
         </div>
       )}
 
-      {/* NON-STUDENT CURRICULUM & ACCREDITATION INSPECTION MODAL (FACULTY, COLLEGE, ADMIN) */}
-      {inspectionModalCourse && (
-        <div className="fixed inset-0 z-[100] bg-slate-950/70 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4 overflow-y-auto animate-fadeIn">
-          <div className="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] flex flex-col shadow-2xl border border-slate-200 relative my-auto overflow-hidden animate-in zoom-in-95">
-            {/* Modal Header */}
-            <div className="p-6 bg-gradient-to-r from-slate-900 via-slate-800 to-emerald-950 text-white flex items-start justify-between gap-4 shrink-0">
-              <div className="space-y-1">
-                <div className="flex items-center gap-2 flex-wrap">
-                  <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-white/20 text-white">
-                    {inspectionModalCourse.category}
-                  </span>
-                  <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-400 text-amber-950">
-                    {isFaculty ? 'Preceptor Syllabus Oversight' : isCollege ? 'College Curriculum Review' : 'Ministry Accreditation Audit'}
-                  </span>
-                </div>
-                <h2 className="text-xl font-black tracking-tight leading-snug">
-                  {inspectionModalCourse.title}
-                </h2>
-                <p className="text-xs text-slate-300 font-medium">
-                  Preceptor: {inspectionModalCourse.author} · {inspectionModalCourse.authorRole || 'Ayush Academic Council'}
-                </p>
-              </div>
-
-              <button
-                onClick={() => setInspectionModalCourse(null)}
-                className="text-white/70 hover:text-white p-1 rounded-xl hover:bg-white/10 cursor-pointer"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-
-            {/* Modal Body */}
-            <div className="p-6 space-y-5 overflow-y-auto flex-1 text-xs">
-              {/* Strict Stakeholder Enrollment Notice */}
-              <div className="p-3.5 bg-amber-50 border border-amber-200 rounded-2xl flex items-start gap-3 text-amber-950">
-                <ShieldCheck className="w-5 h-5 text-amber-700 shrink-0 mt-0.5" />
-                <div className="space-y-0.5">
-                  <span className="font-extrabold text-[11px] uppercase tracking-wider block">
-                    Direct Student Enrollment Restricted
-                  </span>
-                  <p className="text-[11px] text-amber-900 leading-relaxed font-medium">
-                    {isFaculty 
-                      ? 'Faculty Preceptor Mode: You are reviewing the instructional design and practical competency checklist. Direct enrollment and credit acquisition is reserved for registered scholars.'
-                      : isCollege
-                      ? 'College Institutional Oversight: You are inspecting course curriculum for accreditation compliance. Colleges cannot apply or enroll in courses.'
-                      : 'Ministry Regulatory Audit: You are reviewing course syllabus and ABC credit allocation. Administrative accounts cannot apply or enroll in courses.'
-                    }
-                  </p>
-                </div>
-              </div>
-
-              {/* Course Overview & Skill Gap */}
-              <div className="space-y-1.5">
-                <h4 className="font-bold text-slate-800 uppercase tracking-wider text-[10px]">
-                  Curriculum Summary &amp; Pedagogical Objective:
-                </h4>
-                <p className="text-slate-600 leading-relaxed text-xs">
-                  {inspectionModalCourse.skillGap || inspectionModalCourse.description}
-                </p>
-              </div>
-
-              {/* Modules Breakdown */}
-              <div className="space-y-2">
-                <h4 className="font-bold text-slate-800 uppercase tracking-wider text-[10px]">
-                  Syllabus Modules &amp; Laboratory Practicum:
-                </h4>
-                <div className="space-y-2">
-                  {[
-                    { num: '01', title: 'Regulatory Framework, Statutory Rules & Plant Layout', duration: '30 mins' },
-                    { num: '02', title: 'Laboratory Methodology, Standard Operating Procedures & Assay Testing', duration: '35 mins' },
-                    { num: '03', title: 'Quality Assurance, Batch Documentation & Final Competency Case', duration: '25 mins' }
-                  ].map((m, idx) => (
-                    <div key={idx} className="p-3 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between text-xs">
-                      <div className="flex items-center gap-2.5">
-                        <span className="w-6 h-6 rounded-lg bg-slate-200 text-slate-700 font-bold flex items-center justify-center font-mono text-[11px]">
-                          {m.num}
-                        </span>
-                        <span className="font-semibold text-slate-800">{m.title}</span>
-                      </div>
-                      <span className="text-slate-500 font-medium">{m.duration}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Competencies */}
-              <div className="space-y-2">
-                <h4 className="font-bold text-slate-800 uppercase tracking-wider text-[10px]">
-                  Assessed Student Competencies:
-                </h4>
-                <div className="flex flex-wrap gap-1.5">
-                  {(inspectionModalCourse.competencies || []).map((c, idx) => (
-                    <span key={idx} className="bg-emerald-50 text-emerald-900 border border-emerald-200 font-semibold px-2.5 py-1 rounded-lg">
-                      ✓ {c}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              {/* Academic Bank of Credits Info */}
-              <div className="p-3.5 bg-slate-50 rounded-2xl border border-slate-200 flex items-center justify-between text-xs">
-                <div>
-                  <span className="font-bold text-slate-900 block">Academic Bank of Credits (ABC) Transfer</span>
-                  <span className="text-slate-500">2.0 National Skill Credits transferable via DigiLocker ID for scholars</span>
-                </div>
-                <span className="font-extrabold text-emerald-800 bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-200">
-                  NCISM Aligned
-                </span>
-              </div>
-            </div>
-
-            {/* Modal Footer */}
-            <div className="p-4 bg-slate-50 border-t border-slate-100 flex items-center justify-between">
-              <span className="text-xs text-slate-500 font-medium">
-                Author: <strong>{inspectionModalCourse.author}</strong> ({inspectionModalCourse.duration})
-              </span>
-              <button
-                onClick={() => setInspectionModalCourse(null)}
-                className="px-5 py-2 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs rounded-xl transition-all cursor-pointer shadow-xs"
-              >
-                Close Review
-              </button>
-            </div>
           </div>
-        </div>
-      )}
-
-      {/* SWAYAM PLUS DIGILOCKER ABC ENROLLMENT MODAL (FOR STUDENTS ONLY) */}
-      {swayamPlusModalCourse && isStudent && (
-        <div className="fixed inset-0 z-[100] bg-slate-950/70 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4 overflow-y-auto animate-fadeIn">
-          <div className="bg-white rounded-3xl max-w-lg w-full max-h-[90vh] flex flex-col shadow-2xl border border-purple-200 relative my-auto overflow-hidden animate-in zoom-in-95">
-            {/* Header */}
-            <div className="p-6 bg-gradient-to-r from-purple-950 via-slate-900 to-indigo-950 text-white flex items-start justify-between gap-4 shrink-0">
-              <div className="space-y-1">
-                <div className="flex items-center gap-1.5">
-                  <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-purple-400 text-purple-950">
-                    SWAYAM Plus Course Enrollment
-                  </span>
-                </div>
-                <h2 className="text-lg font-black tracking-tight mt-1">
-                  {swayamPlusModalCourse.title}
-                </h2>
-                <p className="text-xs text-purple-200 font-medium">
-                  Industry Partner: {swayamPlusModalCourse.industryPartner || swayamPlusModalCourse.author}
-                </p>
-              </div>
-              <button
-                onClick={() => setSwayamPlusModalCourse(null)}
-                className="text-white/70 hover:text-white p-1 rounded-xl hover:bg-white/10 cursor-pointer"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-
-            {/* Body */}
-            <div className="p-6 space-y-4 overflow-y-auto flex-1 text-xs">
-              <div className="p-3.5 bg-purple-50 rounded-2xl border border-purple-100 space-y-1">
-                <span className="font-extrabold text-purple-950 block">DigiLocker Academic Bank of Credits (ABC):</span>
-                <p className="text-purple-900 font-medium">
-                  Linked ABC Account: <strong>ABC-2026-9042-881</strong> ({currentUser?.name || 'Aarav Sharma'} · National Institute of Ayurveda)
-                </p>
-                <p className="text-[11px] text-purple-800">
-                  {swayamPlusModalCourse.academicCredits || '3 Credits (Transferable via ABC Bank)'}
-                </p>
-              </div>
-
-              <div className="space-y-1">
-                <h4 className="font-bold text-slate-800">Syllabus Overview:</h4>
-                <p className="text-slate-600 leading-relaxed">
-                  {swayamPlusModalCourse.skillGap || swayamPlusModalCourse.description}
-                </p>
-              </div>
-
-              <div className="space-y-1.5">
-                <h4 className="font-bold text-slate-800">Verified Competencies:</h4>
-                <div className="flex flex-wrap gap-1.5">
-                  {(swayamPlusModalCourse.competencies || []).map((c, idx) => (
-                    <span key={idx} className="bg-slate-100 text-slate-800 font-semibold px-2.5 py-1 rounded-lg">
-                      {c}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              {abcCreditSuccess && (
-                <div className="p-3 bg-emerald-100 text-emerald-900 rounded-xl font-bold flex items-center justify-center gap-2 animate-in fade-in">
-                  <CheckCircle2 className="w-5 h-5 text-emerald-700" />
-                  <span>Enrolled successfully! DigiLocker ABC Credit linkage confirmed.</span>
-                </div>
-              )}
-            </div>
-
-            {/* Footer */}
-            <div className="px-6 py-4 border-t border-slate-100 flex items-center justify-between gap-3 bg-slate-50/60">
-              <button
-                onClick={() => setSwayamPlusModalCourse(null)}
-                className="px-4 py-2 text-xs font-semibold text-slate-500 hover:text-slate-800 cursor-pointer"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={() => {
-                  setAbcCreditSuccess(true);
-                  setTimeout(() => {
-                    setAbcCreditSuccess(false);
-                    setSwayamPlusModalCourse(null);
-                  }, 1800);
-                }}
-                disabled={abcCreditSuccess}
-                className="px-5 py-2.5 bg-purple-900 hover:bg-purple-950 disabled:bg-emerald-800 text-white font-black text-xs rounded-xl shadow-md transition-all cursor-pointer flex items-center gap-1.5"
-              >
-                {abcCreditSuccess ? (
-                  <>
-                    <CheckCircle2 className="w-4 h-4 text-emerald-300" />
-                    <span>Enrolled &amp; Linked</span>
-                  </>
-                ) : (
-                  <>
-                    <Check className="w-4 h-4 text-purple-300" />
-                    <span>Confirm Student Enrollment</span>
-                  </>
-                )}
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-    </div>
   );
 }
-
-export default CoursesPage;
-
 
 export function CoursesPage({ currentUser, activePortalId }) {
   // ─────────────────────────────────────────────────────────────────────────────
@@ -682,6 +451,9 @@ export function CoursesPage({ currentUser, activePortalId }) {
   // SWAYAM Plus DigiLocker ABC Credit Transfer Modal State (For Students only)
   const [swayamPlusModalCourse, setSwayamPlusModalCourse] = useState(null);
   const [abcCreditSuccess, setAbcCreditSuccess] = useState(false);
+
+  // Published Course Posters List (Initialized with ALL_COURSES dataset)
+  const [coursesList, setCoursesList] = useState(ALL_COURSES);
 
   // Faculty specific filter: 'all' | 'my_courses' | 'other_faculty' | 'swayam_plus'
   const [facultyCourseFilter, setFacultyCourseFilter] = useState('all');
@@ -752,162 +524,7 @@ export function CoursesPage({ currentUser, activePortalId }) {
   const [selectedCourseForBuy, setSelectedCourseForBuy] = useState(null);
   const [isPurchased, setIsPurchased] = useState(false);
 
-  // Published Course Posters List (Initialized with ALL_COURSES dataset)
-  const [coursesList, setCoursesList] = useState(ALL_COURSES || [
-    { 
-      id: 'mc-1', 
-      title: 'Schedule T Basics & Manufacturing Compliance', 
-      category: 'Manufacturing & GMP',
-      providerType: 'Ministry Certified',
-      duration: '90 mins', 
-      enrolled: 142, 
-      rating: '4.9', 
-      price: 'Free Access',
-      posterImage: courseGmpPoster,
-      author: 'Prof. Meenakshi Joshi',
-      authorRole: 'HOD Dravyaguna, AIIA New Delhi',
-      targetCohort: 'BAMS Final Year',
-      skillGap: 'Understanding Indian pharmaceutical manufacturing requirements, premises, equipment, hygiene, and documentation under Drugs Rules 1945.',
-      competencies: ['Schedule T Rules', 'Cleanroom Hygiene', 'GMP Protocol', 'QA SOPs']
-    },
-    { 
-      id: 'mc-2', 
-      title: 'Good Clinical Practice (GCP) – ICH E6(R3)', 
-      category: 'Clinical Research',
-      providerType: 'Ministry Certified',
-      duration: '120 mins', 
-      enrolled: 198, 
-      rating: '4.9', 
-      price: 'Free Access',
-      posterImage: courseGcpPoster,
-      author: 'Prof. Meenakshi Joshi',
-      authorRole: 'NCISM Preceptor',
-      targetCohort: 'MD Dravyaguna Scholars',
-      skillGap: 'International ethical, scientific, and quality standards for clinical trials. Emphasis on participant protection, data reliability, and risk-based quality thinking.',
-      competencies: ['ICH E6(R3)', 'Informed Consent', 'Trial Lifecycle', 'Data Integrity']
-    },
-    { 
-      id: 'mc-3', 
-      title: 'Good Manufacturing Practice (GMP) Basics', 
-      category: 'Quality Assurance / QA',
-      providerType: 'Ministry Certified',
-      duration: '90 mins', 
-      enrolled: 112, 
-      rating: '4.8', 
-      price: 'Free Access',
-      posterImage: ayushHeroBanner,
-      author: 'Dr. Rajesh Vaidya',
-      authorRole: 'QA Director, Dabur R&D',
-      targetCohort: 'All Ayush Scholars',
-      skillGap: 'Quality-management framework for consistently producing and controlling medicines. Covers validation, documentation, and contamination control.',
-      competencies: ['WHO-GMP Standards', 'Quality Systems', 'Contamination Control', 'Validation SOPs']
-    },
-    { 
-      id: 'mc-4', 
-      title: 'Regulatory Affairs Basics & CDSCO Framework', 
-      category: 'Regulatory Compliance',
-      providerType: 'Ministry Certified',
-      duration: '90 mins', 
-      enrolled: 85, 
-      rating: '4.7', 
-      price: 'Free Access',
-      posterImage: courseGcpPoster,
-      author: 'Prof. S. K. Sharma',
-      authorRole: 'CDSCO Regulatory Advisor',
-      targetCohort: 'BAMS 3rd Year',
-      skillGap: 'CDSCO regulatory framework, Drugs and Cosmetics Act/Rules, and New Drugs and Clinical Trials Rules high-level drug approval pathways.',
-      competencies: ['CDSCO Pathway', 'Drug Approval', 'Submission Checklist', 'CTRI Rules']
-    },
-    { 
-      id: 'mc-5', 
-      title: 'Pharmacovigilance Basics & ADR Safety Monitoring', 
-      category: 'Pharmacovigilance',
-      providerType: 'Ministry Certified',
-      duration: '90 mins', 
-      enrolled: 156, 
-      rating: '4.9', 
-      price: 'Free Access',
-      posterImage: courseGmpPoster,
-      author: 'Prof. Meenakshi Joshi',
-      authorRole: 'HOD Dravyaguna, AIIA New Delhi',
-      targetCohort: 'All Ayush Scholars',
-      skillGap: 'Detection, assessment, understanding and prevention of adverse drug effects. Real-world ADR reporting workflows and safety signal processing.',
-      competencies: ['ADR Detection', 'WHO-UMC Causality', 'Safety Reporting', 'Signal Assessment']
-    },
-    // National MOOC Learning Bridges (SWAYAM & NPTEL)
-    {
-      id: 'mc-swayam-1',
-      title: 'NPTEL: Analytical Chemistry in Herbal Formulations - IIT Madras',
-      category: 'Quality Assurance / QA',
-      providerType: 'NPTEL / SWAYAM',
-      duration: '12 Weeks (Credit Transferable)',
-      enrolled: 1420,
-      rating: '4.9',
-      price: 'Free MOOC',
-      posterImage: courseGmpPoster,
-      author: 'Prof. S. Ranganathan',
-      authorRole: 'Department of Chemistry, IIT Madras',
-      targetCohort: 'BAMS & Ayush Researchers',
-      skillGap: 'Remediation for HPTLC fingerprinting, chromatography calibration, and herbal API standardization.',
-      competencies: ['HPLC / HPTLC', 'Mass Spectrometry', 'Herbal Marker Assay', 'NPTEL Certified'],
-      swayamUrl: 'https://swayam.gov.in/explorer?searchText=analytical+chemistry',
-      isSwayam: true
-    },
-    {
-      id: 'mc-swayam-2',
-      title: 'SWAYAM: Clinical Trials Management - AIIMS',
-      category: 'Clinical Research',
-      providerType: 'NPTEL / SWAYAM',
-      duration: '8 Weeks (Credit Transferable)',
-      enrolled: 1890,
-      rating: '4.9',
-      price: 'Free MOOC',
-      posterImage: courseGcpPoster,
-      author: 'Dr. Priya Narang',
-      authorRole: 'Clinical Research Centre, AIIMS New Delhi',
-      targetCohort: 'Ayush Scholars & MD Fellows',
-      skillGap: 'Remediation for clinical research protocol design, ethical clearances, and ICH-GCP trial monitoring.',
-      competencies: ['ICH-GCP E6(R3)', 'Trial Ethics', 'CDSCO Filing', 'SWAYAM Certified'],
-      swayamUrl: 'https://swayam.gov.in/explorer?searchText=clinical+trials',
-      isSwayam: true
-    },
-    {
-      id: 'mc-swayam-3',
-      title: 'NPTEL: Schedule T Pharmaceutical Engineering & Quality Control - IIT Kharagpur',
-      category: 'Manufacturing & GMP',
-      providerType: 'NPTEL / SWAYAM',
-      duration: '12 Weeks (Credit Transferable)',
-      enrolled: 1150,
-      rating: '4.8',
-      price: 'Free MOOC',
-      posterImage: ayushHeroBanner,
-      author: 'Prof. K. B. Roy',
-      authorRole: 'Biochemical Engineering, IIT Kharagpur',
-      targetCohort: 'BAMS Final Year & GMP Auditors',
-      skillGap: 'Remediation for HVAC cleanroom protocols, particle counts, and industrial Schedule T validation.',
-      competencies: ['Schedule T GMP', 'Cleanroom HVAC', 'Sterility Testing', 'NPTEL Certified'],
-      swayamUrl: 'https://swayam.gov.in/explorer?searchText=pharmaceutical+engineering',
-      isSwayam: true
-    },
-    {
-      id: 'mc-swayam-4',
-      title: 'SWAYAM: Biostatistics & Epidemiological Research for Ayush - PGIMER',
-      category: 'Clinical Research',
-      providerType: 'NPTEL / SWAYAM',
-      duration: '8 Weeks (Credit Transferable)',
-      enrolled: 940,
-      rating: '4.8',
-      price: 'Free MOOC',
-      posterImage: courseGcpPoster,
-      author: 'Prof. Anita Deshmukh',
-      authorRole: 'Biostatistics Division, PGIMER',
-      targetCohort: 'All Ayush Scholars',
-      skillGap: 'Remediation for epidemiological study design, statistical power, and SPSS / R analytics in clinical trials.',
-      competencies: ['Clinical Biostatistics', 'Epidemiology', 'Evidence Synthesis', 'SWAYAM Certified'],
-      swayamUrl: 'https://swayam.gov.in/explorer?searchText=biostatistics',
-      isSwayam: true
-    }
-  ]);
+
 
   // Form State for Faculty Posting a Course
   const [courseForm, setCourseForm] = useState({
@@ -1869,7 +1486,137 @@ export function CoursesPage({ currentUser, activePortalId }) {
         </div>
       )}
 
+
+{/* NON-STUDENT CURRICULUM & ACCREDITATION INSPECTION MODAL (FACULTY, COLLEGE, ADMIN) */}
+      {inspectionModalCourse && (
+        <div className="fixed inset-0 z-[100] bg-slate-950/70 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4 overflow-y-auto animate-fadeIn">
+          <div className="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] flex flex-col shadow-2xl border border-slate-200 relative my-auto overflow-hidden animate-in zoom-in-95">
+            {/* Modal Header */}
+            <div className="p-6 bg-gradient-to-r from-slate-900 via-slate-800 to-emerald-950 text-white flex items-start justify-between gap-4 shrink-0">
+              <div className="space-y-1">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-white/20 text-white">
+                    {inspectionModalCourse.category}
+                  </span>
+                  <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-400 text-amber-950">
+                    {isFaculty ? 'Preceptor Syllabus Oversight' : isCollege ? 'College Curriculum Review' : 'Ministry Accreditation Audit'}
+                  </span>
+                </div>
+                <h2 className="text-xl font-black tracking-tight leading-snug">
+                  {inspectionModalCourse.title}
+                </h2>
+                <p className="text-xs text-slate-300 font-medium">
+                  Preceptor: {inspectionModalCourse.author} · {inspectionModalCourse.authorRole || 'Ayush Academic Council'}
+                </p>
+              </div>
+
+              <button
+                onClick={() => setInspectionModalCourse(null)}
+                className="text-white/70 hover:text-white p-1 rounded-xl hover:bg-white/10 cursor-pointer"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Modal Body */}
+            <div className="p-6 space-y-5 overflow-y-auto flex-1 text-xs">
+              {/* Strict Stakeholder Enrollment Notice */}
+              <div className="p-3.5 bg-amber-50 border border-amber-200 rounded-2xl flex items-start gap-3 text-amber-950">
+                <ShieldCheck className="w-5 h-5 text-amber-700 shrink-0 mt-0.5" />
+                <div className="space-y-0.5">
+                  <span className="font-extrabold text-[11px] uppercase tracking-wider block">
+                    Direct Student Enrollment Restricted
+                  </span>
+                  <p className="text-[11px] text-amber-900 leading-relaxed font-medium">
+                    {isFaculty 
+                      ? 'Faculty Preceptor Mode: You are reviewing the instructional design and practical competency checklist. Direct enrollment and credit acquisition is reserved for registered scholars.'
+                      : isCollege
+                      ? 'College Institutional Oversight: You are inspecting course curriculum for accreditation compliance. Colleges cannot apply or enroll in courses.'
+                      : 'Ministry Regulatory Audit: You are reviewing course syllabus and ABC credit allocation. Administrative accounts cannot apply or enroll in courses.'
+                    }
+                  </p>
+                </div>
+              </div>
+
+              {/* Course Overview & Skill Gap */}
+              <div className="space-y-1.5">
+                <h4 className="font-bold text-slate-800 uppercase tracking-wider text-[10px]">
+                  Curriculum Summary &amp; Pedagogical Objective:
+                </h4>
+                <p className="text-slate-600 leading-relaxed text-xs">
+                  {inspectionModalCourse.skillGap || inspectionModalCourse.description}
+                </p>
+              </div>
+
+              {/* Modules Breakdown */}
+              <div className="space-y-2">
+                <h4 className="font-bold text-slate-800 uppercase tracking-wider text-[10px]">
+                  Syllabus Modules &amp; Laboratory Practicum:
+                </h4>
+                <div className="space-y-2">
+                  {[
+                    { num: '01', title: 'Regulatory Framework, Statutory Rules & Plant Layout', duration: '30 mins' },
+                    { num: '02', title: 'Laboratory Methodology, Standard Operating Procedures & Assay Testing', duration: '35 mins' },
+                    { num: '03', title: 'Quality Assurance, Batch Documentation & Final Competency Case', duration: '25 mins' }
+                  ].map((m, idx) => (
+                    <div key={idx} className="p-3 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between text-xs">
+                      <div className="flex items-center gap-2.5">
+                        <span className="w-6 h-6 rounded-lg bg-slate-200 text-slate-700 font-bold flex items-center justify-center font-mono text-[11px]">
+                          {m.num}
+                        </span>
+                        <span className="font-semibold text-slate-800">{m.title}</span>
+                      </div>
+                      <span className="text-slate-500 font-medium">{m.duration}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Competencies */}
+              <div className="space-y-2">
+                <h4 className="font-bold text-slate-800 uppercase tracking-wider text-[10px]">
+                  Assessed Student Competencies:
+                </h4>
+                <div className="flex flex-wrap gap-1.5">
+                  {(inspectionModalCourse.competencies || []).map((c, idx) => (
+                    <span key={idx} className="bg-emerald-50 text-emerald-900 border border-emerald-200 font-semibold px-2.5 py-1 rounded-lg">
+                      ✓ {c}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {/* Academic Bank of Credits Info */}
+              <div className="p-3.5 bg-slate-50 rounded-2xl border border-slate-200 flex items-center justify-between text-xs">
+                <div>
+                  <span className="font-bold text-slate-900 block">Academic Bank of Credits (ABC) Transfer</span>
+                  <span className="text-slate-500">2.0 National Skill Credits transferable via DigiLocker ID for scholars</span>
+                </div>
+                <span className="font-extrabold text-emerald-800 bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-200">
+                  NCISM Aligned
+                </span>
+              </div>
+            </div>
+
+            {/* Modal Footer */}
+            <div className="p-4 bg-slate-50 border-t border-slate-100 flex items-center justify-between">
+              <span className="text-xs text-slate-500 font-medium">
+                Author: <strong>{inspectionModalCourse.author}</strong> ({inspectionModalCourse.duration})
+              </span>
+              <button
+                onClick={() => setInspectionModalCourse(null)}
+                className="px-5 py-2 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs rounded-xl transition-all cursor-pointer shadow-xs"
+              >
+                Close Review
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+
     </div>
   );
 }
 
+export default CoursesPage;

@@ -92,9 +92,34 @@ export function App() {
         } else {
           setActivePage('skill');
         }
-      } else if (['about', 'opportunities', 'industry', 'courses', 'feed', 'profile', 'messages', 'assessment', 'diagnostic'].includes(hash)) {
+      } else if (hash === 'jobs' || hash === 'opportunities' || hash === 'career') {
+        if (currentUser) {
+          setActivePage('dashboard');
+        } else {
+          setActivePage(hash === 'jobs' ? 'jobs' : 'opportunities');
+        }
+      } else if (hash === 'network' || hash === 'industry') {
+        if (currentUser && activePortalId === 'admin') {
+          setActivePage('dashboard');
+        } else {
+          setActivePage('industry');
+        }
+      } else if (['about', 'courses', 'feed', 'profile', 'messages', 'assessment', 'diagnostic'].includes(hash)) {
         setActivePage(hash === 'diagnostic' ? 'assessment' : hash);
+      } else if (['console', 'students', 'accreditation', 'compliance', 'radar'].includes(hash)) {
+        if (currentUser) {
+          setActivePage('dashboard');
+        } else {
+          setActivePage('login');
+        }
       } else if (!hash || hash === 'home') {
+        if (currentUser) {
+          setActivePage('dashboard');
+        } else {
+          setActivePage('home');
+        }
+      } else {
+        // Unknown hash route fallback: never leave page state undefined
         if (currentUser) {
           setActivePage('dashboard');
         } else {
@@ -454,7 +479,7 @@ export function App() {
           )}
 
           {/* SKILL HUB PAGE */}
-          {activePage === 'skill' && (
+          {(activePage === 'skill' || activePage === 'skills') && (
             <div className="animate-fadeIn">
               <SkillPage
                 onNavigate={handleNavigate}
@@ -484,7 +509,7 @@ export function App() {
           )}
 
           {/* INDUSTRY PAGE */}
-          {activePage === 'industry' && (
+          {(activePage === 'industry' || activePage === 'network') && (
             <div className="animate-fadeIn">
               <IndustryPage
                 onNavigate={handleNavigate}
@@ -543,6 +568,25 @@ export function App() {
               <MessagePage
                 onNavigate={handleNavigate}
                 currentUser={activeUser}
+              />
+            </div>
+          )}
+
+          {/* SAFE FALLBACK FOR UNRECOGNIZED PAGES: NEVER LEAVE A BLANK SCREEN */}
+          {!['home', 'how-it-works', 'features', 'about', 'opportunities', 'skill', 'skills', 'assessment', 'diagnostic', 'jobs', 'industry', 'network', 'company', 'courses', 'feed', 'profile', 'messages'].includes(activePage) && (
+            <div className="animate-fadeIn">
+              <Hero
+                onGetStarted={() => handleOpenAuth()}
+                onSeeHowItWorks={handleSeeHowItWorks}
+                onOpenReadinessModal={() => setIsReadinessModalOpen(true)}
+              />
+              <HowItWorks onOpenReadinessModal={() => setIsReadinessModalOpen(true)} />
+              <Features onOpenReadinessModal={() => setIsReadinessModalOpen(true)} />
+              <AboutEcosystem onOpenReadinessModal={() => setIsReadinessModalOpen(true)} />
+              <Comparison />
+              <FaqSection
+                onOpenReadinessModal={() => setIsReadinessModalOpen(true)}
+                onOpenAuthModal={handleOpenAuth}
               />
             </div>
           )}
