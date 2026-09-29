@@ -1,4 +1,9 @@
-import React, { useState } from 'react';
+const fs = require('fs');
+const path = require('path');
+
+const filePath = path.join(__dirname, '..', 'src', 'pages', 'JobsPage.jsx');
+
+const newJobsPageCode = `import React, { useState } from 'react';
 import { 
   Briefcase, 
   Search, 
@@ -243,7 +248,7 @@ export function JobsPage({ currentUser, onNavigate }) {
       }
     };
 
-    const idKey = `job-${p.id}`;
+    const idKey = \`job-\${p.id}\`;
     const calculatedMatch = defaultScores[idKey] ?? (p.id % 2 === 0 ? 77 + (p.id % 6) : 89 + (p.id % 6));
     const roleCategory = categoriesMap[idKey] || (p.title.toLowerCase().includes('apprentice') ? 'Apprenticeship' : p.title.toLowerCase().includes('project') || p.title.toLowerCase().includes('fellow') ? 'Live Project' : p.title.toLowerCase().includes('officer') || p.title.toLowerCase().includes('physician') ? 'Entry-Level Job' : 'Internship');
 
@@ -369,7 +374,7 @@ export function JobsPage({ currentUser, onNavigate }) {
     setPrerequisiteModalJob(null);
     setGapAnalysisJob(null);
     const newApplication = {
-      id: `app-${Date.now()}`,
+      id: \`app-\${Date.now()}\`,
       jobId: job.id,
       title: job.title,
       company: job.company,
@@ -381,7 +386,7 @@ export function JobsPage({ currentUser, onNavigate }) {
       statusType: 'active',
       activeStep: 0,
       steps: ['Applied', 'Reviewed', 'Matched', 'Interview Scheduled'],
-      interviewNote: job.match < 85 ? `Applied with ${job.match}% match rank (Below 85% recommended benchmark)` : 'Verified 85%+ Match: Expedited Recruiter Screening'
+      interviewNote: job.match < 85 ? \`Applied with \${job.match}% match rank (Below 85% recommended benchmark)\` : 'Verified 85%+ Match: Expedited Recruiter Screening'
     };
 
     setAppliedList(prev => [newApplication, ...prev]);
@@ -395,8 +400,8 @@ export function JobsPage({ currentUser, onNavigate }) {
       senderId: currentUser?.id || 'NIA/AY/2026/0491',
       senderName: currentUser?.name || 'Aarav Sharma',
       senderRole: 'student',
-      title: `New applicant for ${job.title} (${job.category})`,
-      message: `${currentUser?.name || 'Aarav Sharma'} applied for ${job.title} at ${job.company}. Match Rank: ${job.match}%.`,
+      title: \`New applicant for \${job.title} (\${job.category})\`,
+      message: \`\${currentUser?.name || 'Aarav Sharma'} applied for \${job.title} at \${job.company}. Match Rank: \${job.match}%.\`,
       link: '#dashboard-company'
     });
   };
@@ -404,7 +409,7 @@ export function JobsPage({ currentUser, onNavigate }) {
   // Enroll in an Industry Learning Program
   const handleEnrollInProgram = (program) => {
     if (enrolledPrograms.some(p => p.id === program.id)) {
-      alert(`You are already enrolled in ${program.title}!`);
+      alert(\`You are already enrolled in \${program.title}!\`);
       setSelectedProgramModal(null);
       setActiveTab('applied');
       return;
@@ -432,8 +437,8 @@ export function JobsPage({ currentUser, onNavigate }) {
       senderId: currentUser?.id || 'NIA/AY/2026/0491',
       senderName: currentUser?.name || 'Aarav Sharma',
       senderRole: 'student',
-      title: `New Scholar Enrollment: ${program.title}`,
-      message: `${currentUser?.name || 'Aarav Sharma'} enrolled in corporate learning program "${program.title}".`,
+      title: \`New Scholar Enrollment: \${program.title}\`,
+      message: \`\${currentUser?.name || 'Aarav Sharma'} enrolled in corporate learning program "\${program.title}".\`,
       link: '#dashboard-company'
     });
 
@@ -531,11 +536,11 @@ export function JobsPage({ currentUser, onNavigate }) {
         <div className="inline-flex bg-slate-100 p-1 rounded-2xl border border-slate-200/80 self-start sm:self-auto shrink-0 shadow-2xs">
           <button
             onClick={() => setActiveTab('explore')}
-            className={`px-3.5 py-2 rounded-xl text-xs font-extrabold transition-all cursor-pointer flex items-center gap-1.5 ${
+            className={\`px-3.5 py-2 rounded-xl text-xs font-extrabold transition-all cursor-pointer flex items-center gap-1.5 \${
               activeTab === 'explore'
                 ? 'bg-white text-slate-900 shadow-sm'
                 : 'text-slate-600 hover:text-slate-900'
-            }`}
+            }\`}
           >
             <Briefcase className="w-3.5 h-3.5 text-emerald-700" />
             <span>Opportunities ({jobs.length})</span>
@@ -543,29 +548,29 @@ export function JobsPage({ currentUser, onNavigate }) {
 
           <button
             onClick={() => setActiveTab('programs')}
-            className={`px-3.5 py-2 rounded-xl text-xs font-extrabold transition-all cursor-pointer flex items-center gap-1.5 ${
+            className={\`px-3.5 py-2 rounded-xl text-xs font-extrabold transition-all cursor-pointer flex items-center gap-1.5 \${
               activeTab === 'programs'
                 ? 'bg-purple-900 text-white shadow-sm'
                 : 'text-slate-600 hover:text-slate-900'
-            }`}
+            }\`}
           >
-            <BookOpen className={`w-3.5 h-3.5 ${activeTab === 'programs' ? 'text-purple-200' : 'text-purple-700'}`} />
+            <BookOpen className={\`w-3.5 h-3.5 \${activeTab === 'programs' ? 'text-purple-200' : 'text-purple-700'}\`} />
             <span>Learning Programs ({learningPrograms.length})</span>
           </button>
 
           <button
             onClick={() => setActiveTab('applied')}
-            className={`px-3.5 py-2 rounded-xl text-xs font-extrabold transition-all cursor-pointer flex items-center gap-1.5 ${
+            className={\`px-3.5 py-2 rounded-xl text-xs font-extrabold transition-all cursor-pointer flex items-center gap-1.5 \${
               activeTab === 'applied'
                 ? 'bg-slate-900 text-white shadow-sm'
                 : 'text-slate-600 hover:text-slate-900'
-            }`}
+            }\`}
           >
             <TrendingUp className="w-3.5 h-3.5" />
             <span>My Applications &amp; Enrollments</span>
-            <span className={`px-1.5 py-0.2 rounded-full text-[10px] font-bold ${
+            <span className={\`px-1.5 py-0.2 rounded-full text-[10px] font-bold \${
               activeTab === 'applied' ? 'bg-slate-800 text-slate-200' : 'bg-slate-200 text-slate-700'
-            }`}>
+            }\`}>
               {appliedList.length + enrolledPrograms.length}
             </span>
           </button>
@@ -650,11 +655,11 @@ export function JobsPage({ currentUser, onNavigate }) {
                   <button
                     key={tier.id}
                     onClick={() => setMatchTierFilter(tier.id)}
-                    className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                    className={\`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer \${
                       matchTierFilter === tier.id
                         ? 'bg-slate-900 text-white shadow-2xs'
                         : 'bg-white text-slate-600 hover:bg-slate-50 border border-slate-200'
-                    }`}
+                    }\`}
                   >
                     {tier.label}
                   </button>
@@ -674,16 +679,16 @@ export function JobsPage({ currentUser, onNavigate }) {
                 <button
                   key={cat.id}
                   onClick={() => setCategoryFilter(cat.id)}
-                  className={`px-3.5 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all cursor-pointer flex items-center gap-1.5 ${
+                  className={\`px-3.5 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all cursor-pointer flex items-center gap-1.5 \${
                     categoryFilter === cat.id
                       ? 'bg-emerald-900 text-white shadow-xs'
                       : 'bg-white text-slate-700 hover:bg-slate-50 border border-slate-200'
-                  }`}
+                  }\`}
                 >
                   <span>{cat.label}</span>
-                  <span className={`text-[10px] px-1.5 py-0.2 rounded-full font-black ${
+                  <span className={\`text-[10px] px-1.5 py-0.2 rounded-full font-black \${
                     categoryFilter === cat.id ? 'bg-emerald-800 text-emerald-100' : 'bg-slate-100 text-slate-600'
-                  }`}>
+                  }\`}>
                     {cat.count}
                   </span>
                 </button>
@@ -703,11 +708,11 @@ export function JobsPage({ currentUser, onNavigate }) {
                 <button
                   key={loc.id}
                   onClick={() => setLocationFilter(loc.id)}
-                  className={`px-3 py-1 rounded-lg text-xs font-medium whitespace-nowrap transition-all cursor-pointer ${
+                  className={\`px-3 py-1 rounded-lg text-xs font-medium whitespace-nowrap transition-all cursor-pointer \${
                     locationFilter === loc.id
                       ? 'bg-slate-800 text-white'
                       : 'bg-slate-50 text-slate-600 hover:bg-slate-100'
-                  }`}
+                  }\`}
                 >
                   {loc.label}
                 </button>
@@ -742,7 +747,7 @@ export function JobsPage({ currentUser, onNavigate }) {
                     <div className="space-y-3.5">
                       <div className="flex items-start justify-between gap-3">
                         <div className="flex items-center gap-3.5 min-w-0">
-                          <div className={`w-12 h-12 rounded-2xl ${job.logoBg} text-white font-bold text-xs flex items-center justify-center shrink-0 overflow-hidden shadow-2xs border border-slate-100`}>
+                          <div className={\`w-12 h-12 rounded-2xl \${job.logoBg} text-white font-bold text-xs flex items-center justify-center shrink-0 overflow-hidden shadow-2xs border border-slate-100\`}>
                             {job.logoImage ? (
                               <img src={job.logoImage} alt={job.company} className="w-full h-full object-cover" />
                             ) : (
@@ -751,7 +756,7 @@ export function JobsPage({ currentUser, onNavigate }) {
                           </div>
                           <div className="min-w-0">
                             <div className="flex items-center gap-2 flex-wrap mb-1">
-                              <span className={`text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md border ${getCategoryBadge(job.category)}`}>
+                              <span className={\`text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md border \${getCategoryBadge(job.category)}\`}>
                                 {job.category}
                               </span>
                               <span className="text-[10px] text-slate-400 font-medium">
@@ -771,11 +776,11 @@ export function JobsPage({ currentUser, onNavigate }) {
                         <div className="shrink-0 text-right">
                           <button
                             onClick={() => setGapAnalysisJob(job)}
-                            className={`text-[11px] font-black px-2.5 py-1 rounded-xl border flex items-center gap-1.5 transition-all cursor-pointer shadow-2xs ${
+                            className={\`text-[11px] font-black px-2.5 py-1 rounded-xl border flex items-center gap-1.5 transition-all cursor-pointer shadow-2xs \${
                               job.match >= 85 
                                 ? 'text-emerald-900 bg-emerald-50 border-emerald-300 hover:bg-emerald-100' 
                                 : 'text-amber-950 bg-amber-50 border-amber-300 hover:bg-amber-100'
-                            }`}
+                            }\`}
                             title="Click for full competency match audit"
                           >
                             {job.match < 85 && <AlertTriangle className="w-3.5 h-3.5 text-amber-600 shrink-0" />}
@@ -888,11 +893,11 @@ export function JobsPage({ currentUser, onNavigate }) {
                       ) : (
                         <button
                           onClick={() => handleInitiateApply(job)}
-                          className={`px-4 py-2 rounded-xl text-white font-extrabold text-xs transition-all flex items-center justify-center gap-1.5 cursor-pointer shadow-xs active:scale-95 ${
+                          className={\`px-4 py-2 rounded-xl text-white font-extrabold text-xs transition-all flex items-center justify-center gap-1.5 cursor-pointer shadow-xs active:scale-95 \${
                             job.match >= 85 
                               ? 'bg-slate-900 hover:bg-slate-800' 
                               : 'bg-emerald-800 hover:bg-emerald-900'
-                          }`}
+                          }\`}
                         >
                           <span>{job.match >= 85 ? 'Direct Apply' : 'Apply (Advisory)'}</span>
                           <ArrowRight className="w-3.5 h-3.5" />
@@ -952,11 +957,11 @@ export function JobsPage({ currentUser, onNavigate }) {
                 <button
                   key={fmt.id}
                   onClick={() => setProgramFormatFilter(fmt.id)}
-                  className={`px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all cursor-pointer ${
+                  className={\`px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all cursor-pointer \${
                     programFormatFilter === fmt.id
                       ? 'bg-purple-900 text-white shadow-2xs'
                       : 'bg-white text-slate-700 hover:bg-slate-50 border border-slate-200'
-                  }`}
+                  }\`}
                 >
                   {fmt.label}
                 </button>
@@ -970,11 +975,11 @@ export function JobsPage({ currentUser, onNavigate }) {
                 <button
                   key={comp}
                   onClick={() => setProgramCompanyFilter(comp)}
-                  className={`px-2.5 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                  className={\`px-2.5 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer \${
                     programCompanyFilter === comp
                       ? 'bg-slate-900 text-white'
                       : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'
-                  }`}
+                  }\`}
                 >
                   {comp === 'all' ? 'All' : comp}
                 </button>
@@ -1140,19 +1145,19 @@ export function JobsPage({ currentUser, onNavigate }) {
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-100">
                       <div>
                         <div className="flex items-center gap-2.5 flex-wrap">
-                          <span className={`text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md border ${getCategoryBadge(app.category)}`}>
+                          <span className={\`text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md border \${getCategoryBadge(app.category)}\`}>
                             {app.category}
                           </span>
                           <h4 className="font-bold text-base sm:text-lg text-slate-900">
                             {app.title}
                           </h4>
-                          <span className={`px-2.5 py-0.5 rounded-full text-xs font-bold border ${
+                          <span className={\`px-2.5 py-0.5 rounded-full text-xs font-bold border \${
                             app.statusType === 'success' 
                               ? 'text-emerald-800 bg-emerald-50 border-emerald-200'
                               : app.statusType === 'pending'
                               ? 'text-amber-800 bg-amber-50 border-amber-200'
                               : 'text-slate-700 bg-slate-100 border-slate-200'
-                          }`}>
+                          }\`}>
                             {app.status}
                           </span>
                         </div>
@@ -1179,16 +1184,16 @@ export function JobsPage({ currentUser, onNavigate }) {
 
                           return (
                             <div key={stepIdx} className="space-y-1.5">
-                              <div className={`h-2 rounded-full transition-colors ${
+                              <div className={\`h-2 rounded-full transition-colors \${
                                 isDone ? 'bg-slate-900' : 'bg-slate-100'
-                              }`} />
-                              <span className={`text-[11px] block truncate transition-colors ${
+                              }\`} />
+                              <span className={\`text-[11px] block truncate transition-colors \${
                                 isCurrent 
                                   ? 'font-bold text-slate-900' 
                                   : isDone 
                                   ? 'font-medium text-slate-700' 
                                   : 'font-normal text-slate-400'
-                              }`}>
+                              }\`}>
                                 {stepName}
                               </span>
                             </div>
@@ -1274,7 +1279,7 @@ export function JobsPage({ currentUser, onNavigate }) {
                       <div className="h-2 rounded-full bg-slate-100 overflow-hidden">
                         <div 
                           className="h-full bg-purple-900 rounded-full transition-all duration-500" 
-                          style={{ width: `${prog.progress}%` }}
+                          style={{ width: \`\${prog.progress}%\` }}
                         />
                       </div>
                     </div>
@@ -1285,7 +1290,7 @@ export function JobsPage({ currentUser, onNavigate }) {
                         <span>{prog.nextSession}</span>
                       </span>
                       <button
-                        onClick={() => alert(`Launching practical workbook for ${prog.title}`)}
+                        onClick={() => alert(\`Launching practical workbook for \${prog.title}\`)}
                         className="font-bold text-purple-900 hover:underline cursor-pointer"
                       >
                         Open Lab Portal →
@@ -1313,7 +1318,7 @@ export function JobsPage({ currentUser, onNavigate }) {
             </div>
 
             <div className="space-y-1">
-              <span className={`text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md border ${getCategoryBadge(appliedModalJob.category)}`}>
+              <span className={\`text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md border \${getCategoryBadge(appliedModalJob.category)}\`}>
                 {appliedModalJob.category}
               </span>
               <h3 className="text-base font-bold text-slate-900 mt-1">
@@ -1402,7 +1407,7 @@ export function JobsPage({ currentUser, onNavigate }) {
                   <div className="w-full sm:w-28 bg-amber-200/60 rounded-full h-2.5 overflow-hidden shrink-0">
                     <div 
                       className="bg-amber-600 h-full rounded-full transition-all duration-500"
-                      style={{ width: `${prerequisiteModalJob.match}%` }}
+                      style={{ width: \`\${prerequisiteModalJob.match}%\` }}
                     />
                   </div>
                 </div>
@@ -1558,7 +1563,7 @@ export function JobsPage({ currentUser, onNavigate }) {
                   <div className="w-20 sm:w-28 bg-slate-200 rounded-full h-2 overflow-hidden shrink-0">
                     <div 
                       className="bg-emerald-600 h-full rounded-full transition-all duration-500"
-                      style={{ width: `${matchScore}%` }}
+                      style={{ width: \`\${matchScore}%\` }}
                     />
                   </div>
                 </div>
@@ -1761,3 +1766,7 @@ export function JobsPage({ currentUser, onNavigate }) {
 }
 
 export default JobsPage;
+`;
+
+fs.writeFileSync(filePath, newJobsPageCode, 'utf8');
+console.log("Successfully updated JobsPage.jsx with complete Industry Opportunities and Learning Programs suite!");

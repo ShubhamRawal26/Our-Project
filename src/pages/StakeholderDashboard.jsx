@@ -393,18 +393,21 @@ export const StakeholderDashboard = ({
 
   const studentNavItems = [
     { id: 'feed', label: 'Home', icon: Home },
+    { id: 'courses', label: 'Courses', icon: BookOpen },
     { id: 'console', label: 'Student Portal', icon: Layers },
     { id: 'skills', label: 'Skills', icon: BarChart3 },
     { id: 'messages', label: 'Messages', icon: MessageSquare },
     { id: 'jobs', label: 'Jobs', icon: Briefcase }
   ];
 
+  // Company stakeholders do not view academic student courses (they manage Talent ATS & Industry Learning Programs)
   const companyNavItems = [
     { id: 'feed', label: 'Feed', icon: Home },
     { id: 'console', label: 'Company Console', icon: Layers },
     { id: 'jobs', label: 'Talent ATS', icon: Briefcase }
   ];
 
+  // Faculty can view their created courses and other faculty created courses
   const facultyNavItems = [
     { id: 'feed', label: 'Feed', icon: Home },
     { id: 'courses', label: 'Courses', icon: BookOpen },
@@ -412,6 +415,7 @@ export const StakeholderDashboard = ({
     { id: 'skills', label: 'Department Radar', icon: BarChart3 }
   ];
 
+  // Ministry Admin can view available courses for national curriculum oversight
   const ministryNavItems = [
     { id: 'feed', label: 'Feed', icon: Home },
     { id: 'courses', label: 'Courses', icon: BookOpen },
@@ -419,8 +423,10 @@ export const StakeholderDashboard = ({
     { id: 'network', label: 'State Ecosystem', icon: Building2 }
   ];
 
+  // College can view courses for institutional oversight but cannot apply
   const collegeNavItems = [
     { id: 'feed', label: 'Feed', icon: Home },
+    { id: 'courses', label: 'Curriculum & Courses', icon: BookOpen },
     { id: 'console', label: 'Verification', icon: ShieldCheck },
     { id: 'students', label: 'Student', icon: Users },
     { id: 'accreditation', label: 'Accreditation', icon: Award }
@@ -752,14 +758,14 @@ export const StakeholderDashboard = ({
                 <span className="text-[10px] mt-0.5 font-bold">Feed</span>
               </button>
 
-              {/* 2. Courses */}
+              {/* 2. Talent ATS */}
               <button
-                onClick={() => { setActiveTab('courses'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                className={`flex flex-col items-center justify-center py-1 w-full text-xs transition-all cursor-pointer ${activeTab === 'courses' ? 'text-emerald-800 font-extrabold' : 'text-slate-500 hover:text-slate-900 font-medium'
+                onClick={() => { setActiveTab('jobs'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                className={`flex flex-col items-center justify-center py-1 w-full text-xs transition-all cursor-pointer ${activeTab === 'jobs' ? 'text-emerald-800 font-extrabold' : 'text-slate-500 hover:text-slate-900 font-medium'
                   }`}
               >
-                <BookOpen className={`w-5 h-5 shrink-0 ${activeTab === 'courses' ? 'text-emerald-700' : 'text-slate-500'}`} />
-                <span className="text-[10px] mt-0.5 font-bold">Courses</span>
+                <Briefcase className={`w-5 h-5 shrink-0 ${activeTab === 'jobs' ? 'text-emerald-700' : 'text-slate-500'}`} />
+                <span className="text-[10px] mt-0.5 font-bold">Talent ATS</span>
               </button>
 
               {/* 3. Center Elevated Floating Green (+) Button */}
